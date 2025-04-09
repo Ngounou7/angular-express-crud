@@ -1,0 +1,26 @@
+
+
+<div class="container mt-4">
+    <h1>Article Table</h1>
+    <table class="table">
+        <thead>
+            <!-- <h1 *nglf="!isResultLoaded">Loading.............</h1> -->
+            <tr>
+                <th scope="col ">Title</th>
+                <th scope="col ">Author</th>
+                <th scope="col ">Body</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let article of articles">
+                <td>{{article.title}}</td>
+                <td>{{article.author}}</td>
+                <td>{{article.body}}</td>
+                <td>
+                    <button type="button" class="btn btn-success" click="updateArticle(Article)">Edit</button>
+                    <button type="button" class="btn btn-danger" click="deleteArticle(Article)">Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
