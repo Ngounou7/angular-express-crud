@@ -9,7 +9,9 @@ app.use(cors({
     origin: 'http://localhost:4200', // Your Angular app's origin
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type']
-  }));
+}));
+
+
 
 app.use("/articles", require("./routes/postRoutes"));
 

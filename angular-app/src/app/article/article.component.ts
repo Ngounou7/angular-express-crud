@@ -16,7 +16,7 @@ import { Observable } from 'rxjs';
 export class ArticleComponent {
 
   articles: Article[] = [];
-  isResultLoaded = false;
+  isLoading = true;
   isUpdateFormActive = false;
   errorMessage!: string;
 
@@ -30,17 +30,33 @@ export class ArticleComponent {
 
   getArticles() {
     this.articleService.getAllArticles().subscribe({
-      next: (articles) => {
-        this.articles = articles;
-        console.log(articles);
+      next: (data) => {
+        this.articles = Array.isArray(data[0]) ? data[0] : data;
+        this.isLoading = false;
+        console.log(this.articles);
       },
       error: (error) => {
         this.errorMessage = error;
+        this.isLoading = false;
       }
     });
   }
 
   save() {
 
+  }
+
+  trackById(index: number, article: any): number {
+    return article.id;
+  }
+
+  updateArticle(article: any): void {
+    console.log('Updating:', article);
+    // Your update logic
+  }
+
+  deleteArticle(article: any): void {
+    console.log('Deleting:', article);
+    // Your delete logic
   }
 }
