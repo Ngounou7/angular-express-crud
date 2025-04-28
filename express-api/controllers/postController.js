@@ -70,7 +70,7 @@ exports.update = async (req, res, next) => {
             urlimg: imagePath
         });
 
-        console.log(article);
+        //console.log(article);
 
         const [affectedRows] = await Article.update(article, articleId);
 

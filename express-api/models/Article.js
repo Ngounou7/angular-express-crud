@@ -56,48 +56,25 @@ class Article {
 
     static update(id, article) {
 
-        
-        const allowedFields = ['title', 'author', 'body', 'urlimg'];
         console.log(article);
-        const setClauses = [];
-        const values = [];
+        console.log(id);
 
-        allowedFields.forEach(field => {
-            if (article.hasOwnProperty(field)) {
-                setClauses.push(`${field} = ?`);
-                values.push(article[field]);
-            }
-        });
+        const sql = `UPDATE article SET 
+            title = ?, 
+            body = ?, 
+            author = ?, 
+            urlimg = ? 
+            WHERE id = ?`;
 
-        if (setClauses.length === 0) {
-            throw new Error('No valid fields provided for update. Allowed fields: title, author, body');
-        }
+        const params = [
+            article.title,
+            article.body,
+            article.author,
+            article.urlimg,
+            id
+        ];
 
-        values.push(id);
-        
-        const sql = `UPDATE article SET ${setClauses.join(', ')} WHERE id = ?`;
-
-        try {
-            const [result] = db.execute(sql, values);
-            
-            if (result.affectedRows === 0) {
-                throw new Error('Article not found or no changes made');
-            }
-    
-            return {
-                success: true,
-                message: 'Article updated successfully',
-                affectedRows: result.affectedRows
-            };
-        } catch (error) {
-            console.error('Database update error:', error);
-            
-            if (error.code === 'ER_DATA_TOO_LONG') {
-                throw new Error('Field value too long');
-            }
-            
-            throw error;
-        }
+        return db.execute(sql, params);
     }
 }
 
